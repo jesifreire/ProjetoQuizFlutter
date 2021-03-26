@@ -16,10 +16,24 @@ class PerguntaApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text('Perguntas'),
+          backgroundColor: Colors.purple[400],
+          centerTitle: true,
         ),
         body: Column(
           children: <Widget>[
             Text(Perguntas[0]),
+            RaisedButton(
+              child: Text('Resposta 1'),
+              onPressed: null,
+            ),
+            RaisedButton(
+              child: Text('Resposta 2'),
+              onPressed: null,
+            ),
+            RaisedButton(
+              child: Text('Resposta 3'),
+              onPressed: null,
+            ),
           ],
         ),
       ),
