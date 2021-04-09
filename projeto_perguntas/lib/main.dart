@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'resultado.dart';
-import 'questionario.dart';
+import './questionario.dart';
+import './resultado.dart';
 
-main() {
-  runApp(PerguntaApp());
-}
+main() => runApp(new PerguntaApp());
 
 class PerguntaApp extends StatefulWidget {
   @override
@@ -19,27 +17,27 @@ class _PerguntaAppState extends State<PerguntaApp> {
       'texto': 'Qual é a sua cor favorita?',
       'respostas': [
         {'texto': 'Preto', 'pontuacao': 10},
-        {'texto': 'Azul', 'pontuacao': 10},
-        {'texto': 'Verde', 'pontuacao': 10},
-        {'texto': 'Branco', 'pontuacao': 10},
+        {'texto': 'Azul', 'pontuacao': 5},
+        {'texto': 'Verde', 'pontuacao': 3},
+        {'texto': 'Branco', 'pontuacao': 1},
       ],
     },
     {
       'texto': 'Qual é o seu animal favorito?',
       'respostas': [
         {'texto': 'Cachorro', 'pontuacao': 10},
-        {'texto': 'Gato', 'pontuacao': 8},
-        {'texto': 'Baleia', 'pontuacao': 10},
-        {'texto': 'Peixe', 'pontuacao': 9},
+        {'texto': 'Baleia', 'pontuacao': 5},
+        {'texto': 'Gato', 'pontuacao': 3},
+        {'texto': 'Leão', 'pontuacao': 1},
       ],
     },
     {
       'texto': 'Qual o seu desenho favorito?',
       'respostas': [
-        {'texto': 'Snoopy', 'nota': 10},
-        {'texto': 'Três Espiãs Demais', 'nota': 9},
-        {'texto': 'Dragon Ball', 'nota': 8},
-        {'texto': 'She-Ra', 'nota': 10},
+        {'texto': 'She-Ra', 'pontuacao': 9},
+        {'texto': 'Snoopy', 'pontuacao': 10},
+        {'texto': 'Três Espiãs Demais', 'pontuacao': 8},
+        {'texto': 'Irmão do Jorel', 'pontuacao': 3},
       ],
     }
   ];
@@ -51,7 +49,13 @@ class _PerguntaAppState extends State<PerguntaApp> {
         _pontuacaoTotal += pontuacao;
       });
     }
-    print(_pontuacaoTotal);
+  }
+
+  void _reiniciarQuestionario() {
+    setState(() {
+      _perguntaSelecionada = 0;
+      _pontuacaoTotal = 0;
+    });
   }
 
   bool get temPerguntaSelecionada {
@@ -60,10 +64,6 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, Object>> respostas = temPerguntaSelecionada
-        ? _perguntas[_perguntaSelecionada]['respostas']
-        : null;
-
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -83,9 +83,9 @@ class _PerguntaAppState extends State<PerguntaApp> {
             ? Questionario(
                 perguntas: _perguntas,
                 perguntaSelecionada: _perguntaSelecionada,
-                responder: _responder,
+                quandoResponder: _responder,
               )
-            : Resultado(),
+            : Resultado(_pontuacaoTotal, _reiniciarQuestionario),
       ),
     );
   }
